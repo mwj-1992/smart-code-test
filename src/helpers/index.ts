@@ -24,6 +24,11 @@ export const insertUrlParam = (key: string, value: string | number) => {
   window.history.pushState({ path: newurl }, "", newurl);
 };
 
+export const clearParams = ()=>{
+  window.history.pushState({ path: window.location.origin }, "", window.location.origin);
+
+}
+
 /**
  * Removed a specific parameter from parameter to keep the url clean
  * @param url 
