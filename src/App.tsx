@@ -63,9 +63,7 @@ export default function App() {
     setIsLoading(true);
     try {
       const apiResponse = await fetch(
-        `https://k1bu2ybcgc.execute-api.ap-southeast-1.amazonaws.com/dev/absences?${queryParamsString(
-          query
-        )}`
+        `https://k1bu2ybcgc.execute-api.ap-southeast-1.amazonaws.com/dev/absences${window.location.search}`
       );
       const response: any = await apiResponse.json();
       setIsLoading(false);
@@ -271,7 +269,7 @@ export default function App() {
                 <TableCell colSpan={10}> No data found</TableCell>
               </TableRow>
             ) : (
-              records.map((record: any) => (
+              records.map((record: any, index:number) => (
                 <TableRow
                   key={record.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
