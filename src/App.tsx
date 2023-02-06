@@ -26,10 +26,10 @@ import {
   debounce,
   clearParams,
 } from "./helpers";
-import { AbsenceQueryParams } from "./interface";
+import { AbsenceApiResponse, AbsenceQueryParams, AbsenceRecord } from "./interface";
 
 export default function App() {
-  const [records, setRecords] = useState([]),
+  const [records, setRecords] = useState<AbsenceRecord[]>([]),
     [total, setTotal] = useState(0),
     [isLoading, setIsLoading] = useState(false);
 
@@ -58,10 +58,9 @@ export default function App() {
       const apiResponse = await fetch(
         `https://k1bu2ybcgc.execute-api.ap-southeast-1.amazonaws.com/dev/absences${window.location.search}`
       );
-      const response: any = await apiResponse.json();
+      const response:AbsenceApiResponse  = await apiResponse.json();
       setIsLoading(false);
-      console.log(response.rows);
-      setRecords(response?.rows || []);
+      setRecords(response?.rows);
       setTotal(response?.count || 0);
     } catch (e: any) {
       setIsLoading(false);
