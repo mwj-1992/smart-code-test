@@ -55,6 +55,7 @@ export default function App() {
   const loadData = async () => {
     setIsLoading(true);
     try {
+      // ToDo: the link should be from .env file
       const apiResponse = await fetch(
         `https://k1bu2ybcgc.execute-api.ap-southeast-1.amazonaws.com/dev/absences${window.location.search}`
       );
@@ -123,7 +124,7 @@ export default function App() {
    */
   useEffect(() => {
     loadData();
-  }, [query.limit]);
+  }, [query]);
 
   return (
     <>
