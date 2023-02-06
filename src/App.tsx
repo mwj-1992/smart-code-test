@@ -24,7 +24,9 @@ import {
   insertUrlParam,
   getUrlParameters,
   debounce,
+  clearParams,
 } from "./helpers";
+import { AbsenceQueryParams } from "./interface";
 
 export default function App() {
   const [records, setRecords] = useState([]),
@@ -34,30 +36,21 @@ export default function App() {
   /**
    * Object detructuring
    */
+  const initialState = ():AbsenceQueryParams => {
+    return {
+      page: Number(getUrlParameters().page || 0),
+      limit: Number(getUrlParameters().limit || 5),
+      type: getUrlParameters().type || "",
+      createdAt: getUrlParameters().createdAt || "",
+      confirmedAt: getUrlParameters().confirmedAt || "",
+      rejectedAt: getUrlParameters().rejectedAt || "",
+      name: getUrlParameters().name || "",
+      admitterNote: getUrlParameters().admitterNote || "",
+      memberNote: getUrlParameters().memberNote || "",
+    };
+  };
 
-  const {
-    page = 0,
-    limit = 5,
-    type = "",
-    createdAt = "",
-    confirmedAt = "",
-    rejectedAt = "",
-    name = "",
-    admitterNote = "",
-    memberNote = "",
-  } = getUrlParameters();
-
-  const [query, setQuery] = useState({
-    page,
-    limit,
-    type,
-    createdAt,
-    confirmedAt,
-    rejectedAt,
-    name,
-    admitterNote,
-    memberNote,
-  });
+  const [query, setQuery] = useState(initialState());
 
   const loadData = async () => {
     setIsLoading(true);
@@ -90,7 +83,6 @@ export default function App() {
   const handleTextInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-
     insertUrlParam(event.target.name, event.target.value);
     insertUrlParam("page", 0);
 
@@ -120,6 +112,12 @@ export default function App() {
     insertUrlParam("page", 0);
 
     setQuery({ ...query, [event.target.name]: event.target.value });
+  };
+
+  const clearState = () => {
+    clearParams();
+    console.log(initialState())
+    setQuery(initialState());
   };
 
   /**
@@ -167,10 +165,7 @@ export default function App() {
                     </MenuItem>
                     {Object.values(ABSENCE_TYPPES).map(
                       (absenceType: string, index: number) => (
-                        <MenuItem
-                          value={absenceType}
-                          key={`${absenceType}`}
-                        >
+                        <MenuItem value={absenceType} key={`${absenceType}`}>
                           {" "}
                           {absenceType}
                         </MenuItem>
@@ -244,8 +239,12 @@ export default function App() {
                   }}
                 />
               </TableCell>
-              <TableCell><Button onClick={()=>window.location.search =''} size="small"> clear</Button></TableCell>
-
+              <TableCell>
+                <Button onClick={clearState} size="small">
+                  {" "}
+                  clear
+                </Button>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>.No</TableCell>
@@ -271,7 +270,7 @@ export default function App() {
                 <TableCell colSpan={10}> No data found</TableCell>
               </TableRow>
             ) : (
-              records.map((record: any, index:number) => (
+              records.map((record: any, index: number) => (
                 <TableRow
                   key={record.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
