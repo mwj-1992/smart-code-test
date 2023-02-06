@@ -6,6 +6,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Button,
 } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
@@ -22,7 +23,6 @@ import { ABSENCE_TYPPES } from "./helpers/enum";
 import {
   insertUrlParam,
   getUrlParameters,
-  queryParamsString,
   debounce,
 } from "./helpers";
 
@@ -244,6 +244,8 @@ export default function App() {
                   }}
                 />
               </TableCell>
+              <TableCell><Button onClick={()=>window.location.search =''} size="small"> clear</Button></TableCell>
+
             </TableRow>
             <TableRow>
               <TableCell>.No</TableCell>
