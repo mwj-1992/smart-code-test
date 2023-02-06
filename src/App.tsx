@@ -92,8 +92,6 @@ export default function App() {
   const handleTextInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log("event.target.name", event.target.name);
-    console.log("event.target.value", event.target.value);
 
     insertUrlParam(event.target.name, event.target.value);
     insertUrlParam("page", 0);
@@ -173,7 +171,7 @@ export default function App() {
                       (absenceType: string, index: number) => (
                         <MenuItem
                           value={absenceType}
-                          key={`${absenceType}_${index}`}
+                          key={`${absenceType}`}
                         >
                           {" "}
                           {absenceType}
@@ -273,9 +271,9 @@ export default function App() {
                 <TableCell colSpan={10}> No data found</TableCell>
               </TableRow>
             ) : (
-              records.map((record: any, index: number) => (
+              records.map((record: any) => (
                 <TableRow
-                  key={index}
+                  key={record.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>{index + 1}</TableCell>
