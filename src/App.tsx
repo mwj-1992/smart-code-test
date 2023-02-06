@@ -30,8 +30,8 @@ import { AbsenceApiResponse, AbsenceQueryParams, AbsenceRecord } from "./interfa
 
 export default function App() {
   const [records, setRecords] = useState<AbsenceRecord[]>([]),
-    [total, setTotal] = useState(0),
-    [isLoading, setIsLoading] = useState(false);
+    [total, setTotal] = useState<number>(0),
+    [isLoading, setIsLoading] = useState<boolean>(false);
 
   /**
    * Object detructuring
@@ -50,7 +50,7 @@ export default function App() {
     };
   };
 
-  const [query, setQuery] = useState(initialState());
+  const [query, setQuery] = useState<AbsenceQueryParams>(initialState());
 
   const loadData = async () => {
     setIsLoading(true);
@@ -70,7 +70,7 @@ export default function App() {
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
-  ) => {
+  ):void => {
     insertUrlParam("page", newPage);
     setQuery({ ...query, page: newPage });
   };
@@ -114,9 +114,8 @@ export default function App() {
   };
 
   const clearState = () => {
-    clearParams();
-    console.log(initialState())
-    setQuery(initialState());
+    clearParams(); // Clear URL Params.
+    setQuery(initialState()); // Clear State.
   };
 
   /**
@@ -124,7 +123,7 @@ export default function App() {
    */
   useEffect(() => {
     loadData();
-  }, [query]);
+  }, [query.limit]);
 
   return (
     <>
