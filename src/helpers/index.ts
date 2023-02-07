@@ -10,7 +10,7 @@ export const debounce = (func: any, timeout = 300) => {
 
 export const insertUrlParam = (key: string, value: string | number) => {
   let url = window.location.search;
-  if(value =='') url = removeURLParameter(url, key) 
+  if(value ==='') url = removeURLParameter(url, key) 
   
   let searchParams = new URLSearchParams(url);
   searchParams.set(key, value as string);

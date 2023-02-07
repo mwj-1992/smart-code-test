@@ -276,7 +276,7 @@ export default function AbsenceTable() {
                 >
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
-                    <img className="member-image" src={record.member.image} />
+                    <img alt={record.member?.image} className="member-image" src={record.member?.image} />
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {record?.member.name || ""}
